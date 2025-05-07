@@ -1,0 +1,91 @@
+!
+version 12.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R1
+!
+!
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+!
+!
+!
+!
+aaa new-model
+!
+aaa authentication login default group tacacs+ none 
+aaa authentication login telnet_lines group tacacs+ 
+!
+!
+!
+aaa accounting exec default start-stop group tacacs+
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip ssh version 1
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address 192.168.10.1 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+tacacs-server host 192.168.10.2 key ciscosecret
+tacacs-server host 192.168.10.6 key ciscosecret
+!
+!
+!
+!
+line con 0
+ accounting exec default
+!
+line aux 0
+!
+line vty 0 4
+ login authentication exit
+!
+!
+ntp update-calendar
+!
+end
+
